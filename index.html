@@ -1,33 +1,594 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- 响应式适配移动端 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片展示页面</title>
+    <title>Global Trading - Professional International Trade Company</title>
     <style>
+        /* 全局初始化样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
         }
-        body {
-            min-height: 100vh;
+
+        /* 全局颜色变量（方便修改） */
+        :root {
+            --primary: #165DFF; /* 主色：商务蓝 */
+            --accent: #FF7D00;  /* 强调色：行动橙 */
+            --dark: #333333;    /* 深灰文字 */
+            --gray: #666666;    /* 浅灰文字 */
+            --light: #F5F7FA;   /* 浅灰背景 */
+            --white: #FFFFFF;   /* 白色 */
+        }
+
+        /* 通用容器 */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 按钮通用样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #0E4BD1;
+        }
+        .btn-accent {
+            background: var(--accent);
+        }
+        .btn-accent:hover {
+            background: #E66A00;
+        }
+
+        /* 顶部导航栏 */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+            padding: 15px 0;
+        }
+        .nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            background: #f5f5f5;
-            font-family: sans-serif;
         }
-        .img-box {
-            max-width: 90%;
-            max-height: 90vh;
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+        .nav-menu a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        /* 轮播Banner样式 - 自动播放 */
+        .banner {
+        margin-top: 80px;
+        height: 550px;
+        position: relative;
+        overflow: hidden;
+        }
+        .banner-slider {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        }
+        .banner-slide {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        animation: slideAnimation 16s infinite linear;
+        }
+        .banner-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        }
+        /* 文字悬浮在图片上方 */
+        .banner-content {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        max-width: 600px;
+        color: #fff;
+        z-index: 2;
+        }
+        .banner-content h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        line-height: 1.2;
+        }
+        .banner-content p {
+        font-size: 18px;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        }
+        /* 轮播动画：4张图 每张停留4秒 */
+        @keyframes slideAnimation {
+        0% { opacity: 0; }
+        5% { opacity: 1; }
+        25% { opacity: 1; }
+        30% { opacity: 0; }
+        100% { opacity: 0; }
+        }
+        /* 分别设置每张图的动画延迟 */
+        .banner-slide:nth-child(1) { animation-delay: 0s; }
+        .banner-slide:nth-child(2) { animation-delay: 4s; }
+        .banner-slide:nth-child(3) { animation-delay: 8s; }
+        .banner-slide:nth-child(4) { animation-delay: 12s; }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+        .banner { height: 450px; }
+        .banner-content { padding: 0 20px; }
+        .banner-content h1 { font-size: 32px; }
+        }   
+
+        /* 产品展示区 */
+        .products {
+            padding: 80px 0;
+            background: var(--light);
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .product-card {
+            background: var(--white);
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-name {
+            font-size: 18px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .product-price {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .product-desc {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* 公司优势区 */
+        .advantages {
+            padding: 80px 0;
+        }
+        .adv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        .adv-item {
+            padding: 30px 20px;
+        }
+        .adv-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .adv-item h3 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+        .adv-item p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* 关于我们 */
+        .about {
+            padding: 80px 0;
+            background: var(--light);
+        }
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .about-img img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        .about-text h2 {
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        .about-text p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        /* 联系我们 */
+        .contact {
+            padding: 80px 0;
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 3px 20px rgba(0,0,0,0.08);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+        .form-group textarea {
+            height: 150px;
+            resize: none;
+        }
+        .contact-info {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--gray);
+        }
+        .contact-info p {
+            margin-bottom: 8px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+        }
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        .footer-col p,
+        .footer-col a {
+            color: #aaa;
+            line-height: 1.8;
+            text-decoration: none;
+        }
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #888;
+        }
+
+        /* 响应式适配手机 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 20px;
+            }
+            .banner h1 {
+                font-size: 32px;
+            }
+            .banner {
+                height: 450px;
+                padding: 0 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 加载你本地桌面的图片 -->
-    <img src="/MyWeb/1.png" alt="展示图片" class="img-box">
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="container nav">
+            <a href="#" class="logo">GLOBAL TRADE</a>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#advantages">Advantages</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 轮播Banner（自动轮播版 4张图） -->
+    <section class="banner" id="home">
+        <div class="banner-slider">
+        <!-- 轮播图1 -->
+        <div class="banner-slide active">
+            <img src="/MyWeb/pp行李箱-合成版-1.png" alt="Banner">
+            <div class="container banner-content">
+            <h1>Professional Global Trading Solutions</h1>
+            <p>We supply high-quality products to worldwide customers, supporting OEM & ODM customization, fast delivery and competitive prices.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div>
+        </div>
+        <!-- 轮播图2 -->
+        <div class="banner-slide">
+            <img src="https://picsum.photos/1920/1080?random=2" alt="Banner">
+            <div class="container banner-content">
+            <h1>Factory Direct & Competitive Price</h1>
+            <p>10+ years manufacturing experience, strict quality control, cost-effective products for global buyers.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div>
+        </div>
+        <!-- 轮播图3 -->
+        <div class="banner-slide">
+            <img src="https://picsum.photos/1920/1080?random=3" alt="Banner">
+            <div class="container banner-content">
+            <h1>Global Fast Delivery</h1>
+            <p>Cooperate with top logistics companies, safe and fast shipping to Europe, America, Asia and more.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div>
+        </div>
+        <!-- 轮播图4 -->
+        <div class="banner-slide">
+            <img src="https://picsum.photos/1920/1080?random=4" alt="Banner">
+            <div class="container banner-content">
+            <h1>Customization Service</h1>
+            <p>Support OEM & ODM, customize logo, packaging and products according to your requirements.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- 产品展示 -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Hot Products</h2>
+                <p>High-quality, cost-effective products exported to Europe, America, Southeast Asia and other regions</p>
+            </div>
+            <div class="product-grid">
+                <!-- 产品1 -->
+                <div class="product-card">
+                    <img src="https://picsum.photos/600/400?random=10" class="product-img" alt="Product">
+                    <div class="product-info">
+                        <h3 class="product-name">Electronic Product</h3>
+                        <div class="product-price">$29.99</div>
+                        <p class="product-desc">High quality, durable, suitable for global market</p>
+                        <a href="#" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <!-- 产品2 -->
+                <div class="product-card">
+                    <img src="https://picsum.photos/600/400?random=11" class="product-img" alt="Product">
+                    <div class="product-info">
+                        <h3 class="product-name">Home Appliance</h3>
+                        <div class="product-price">$45.99</div>
+                        <p class="product-desc">CE certified, export to Europe and America</p>
+                        <a href="#" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <!-- 产品3 -->
+                <div class="product-card">
+                    <img src="https://picsum.photos/600/400?random=12" class="product-img" alt="Product">
+                    <div class="product-info">
+                        <h3 class="product-name">Hardware Tool</h3>
+                        <div class="product-price">$15.99</div>
+                        <p class="product-desc">Factory direct supply, competitive price</p>
+                        <a href="#" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <!-- 产品4 -->
+                <div class="product-card">
+                    <img src="https://picsum.photos/600/400?random=13" class="product-img" alt="Product">
+                    <div class="product-info">
+                        <h3 class="product-name">Fashion Accessory</h3>
+                        <div class="product-price">$9.99</div>
+                        <p class="product-desc">Trendy design, popular in Southeast Asia</p>
+                        <a href="#" class="btn">Inquiry</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 公司优势 -->
+    <section class="advantages" id="advantages">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Core Advantages</h2>
+                <p>Why choose us as your global trade partner</p>
+            </div>
+            <div class="adv-grid">
+                <div class="adv-item">
+                    <div class="adv-icon">🏭</div>
+                    <h3>Factory Direct Supply</h3>
+                    <p>Own manufacturing factory, no middleman, lower cost</p>
+                </div>
+                <div class="adv-item">
+                    <div class="adv-icon">🌍</div>
+                    <h3>Global Delivery</h3>
+                    <p>Cooperate with international logistics, fast and safe delivery</p>
+                </div>
+                <div class="adv-item">
+                    <div class="adv-icon">🛠️</div>
+                    <h3>Custom Service</h3>
+                    <p>Support OEM/ODM, customize products according to your needs</p>
+                </div>
+                <div class="adv-item">
+                    <div class="adv-icon">✅</div>
+                    <h3>Quality Assurance</h3>
+                    <p>Strict quality control system, pass international certifications</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="https://picsum.photos/800/500?random=20" alt="About Us">
+                </div>
+                <div class="about-text">
+                    <h2>About Our Company</h2>
+                    <p>Founded in 2010, we are a professional international trade company integrating industry and trade. Our products are exported to more than 80 countries and regions around the world.</p>
+                    <p>We have a professional design team, production team and foreign trade service team, committed to providing customers with high-quality products and one-stop purchasing solutions.</p>
+                    <p>Adhering to the principle of "integrity first, quality foremost", we have established long-term stable cooperative relations with global customers.</p>
+                    <a href="#contact" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us Now</h2>
+                <p>Send us your inquiry, we will reply within 24 hours</p>
+            </div>
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Your Company" required>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Your Message / Inquiry" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Send Inquiry</button>
+            </form>
+            <div class="contact-info">
+                <p>📧 Email: info@globaltrade.com</p>
+                <p>📞 Phone: +86 138 XXXX XXXX</p>
+                <p>📍 Address: XXXX Industrial Zone, XXXX City, China</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>GLOBAL TRADE</h3>
+                    <p>Professional international trade company, serving global customers</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a><br>
+                    <a href="#products">Products</a><br>
+                    <a href="#about">About Us</a><br>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Service</h3>
+                    <p>OEM & ODM Customization</p>
+                    <p>Global Shipping</p>
+                    <p>After-sales Service</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Global Trade. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
