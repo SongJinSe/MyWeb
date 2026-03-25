@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车辆行人检测系统</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --danger-color: #ef4444;
+            --text-color: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 650px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .image-display {
+            width: 100%;
+            height: 380px;
+            border: 2px dashed #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            overflow: hidden;
+            background-color: #f9fafb;
+        }
+
+        .image-display img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .placeholder-text {
+            color: #9ca3af;
+            text-align: center;
+        }
+
+        .status-bar {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-open {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-open:hover {
+            background-color: #4338ca;
+        }
+
+        .btn-weight {
+            background-color: #6b7280;
+            color: white;
+        }
+
+        .btn-weight:hover {
+            background-color: #4b5563;
+        }
+
+        .btn-exit {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-exit:hover {
+            background-color: #dc2626;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 车辆行人检测系统</h1>
+        
+        <!-- 图片显示区域 -->
+        <div class="image-display" id="imageBox">
+            <div class="placeholder-text">
+                <p>📷 请点击下方“打开图片”按钮</p>
+                <p>选择待检测的图片文件</p>
+            </div>
+        </div>
+
+        <!-- 状态提示栏 -->
+        <div class="status-bar" id="statusText"></div>
+
+        <!-- 功能按钮组 -->
+        <div class="button-group">
+            <button class="btn-open" id="openImgBtn">打开图片</button>
+            <button class="btn-weight" id="loadWeightBtn">目标检测权重文件</button>
+            <button class="btn-exit" id="exitSysBtn">退出系统</button>
+        </div>
+
+        <!-- 隐藏的文件选择器 -->
+        <input type="file" id="imgInput" accept="image/png,image/jpg,image/jpeg,image/bmp">
+        <input type="file" id="weightInput" accept=".pth,.pt,.weights,.onnx,.pb">
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const imageBox = document.getElementById('imageBox');
+        const statusText = document.getElementById('statusText');
+        const openImgBtn = document.getElementById('openImgBtn');
+        const loadWeightBtn = document.getElementById('loadWeightBtn');
+        const exitSysBtn = document.getElementById('exitSysBtn');
+        const imgInput = document.getElementById('imgInput');
+        const weightInput = document.getElementById('weightInput');
+
+        // 1. 打开图片功能
+        openImgBtn.addEventListener('click', () => {
+            imgInput.click();
+        });
+
+        imgInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    // 显示图片
+                    imageBox.innerHTML = `<img src="${event.target.result}" alt="待检测图片">`;
+                    // 更新状态
+                    statusText.textContent = `✅ 已加载图片: ${file.name}`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 2. 加载权重文件功能
+        loadWeightBtn.addEventListener('click', () => {
+            weightInput.click();
+        });
+
+        weightInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                statusText.textContent = `✅ 已选择权重文件: ${file.name}`;
+                alert(`权重文件 "${file.name}" 已选择\n（注：此为前端演示，实际加载需配合后端模型）`);
+            }
+        });
+
+        // 3. 退出系统功能
+        exitSysBtn.addEventListener('click', () => {
+            if (confirm('⚠️ 确定要退出车辆行人检测系统吗？')) {
+                // 尝试关闭窗口（现代浏览器通常只允许关闭JS打开的窗口）
+                window.close();
+                // 如果关闭失败，提示用户
+                statusText.textContent = '请手动关闭当前浏览器标签页';
+            }
+        });
+    </script>
+</body>
+</html>
