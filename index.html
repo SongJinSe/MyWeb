@@ -109,7 +109,7 @@
         top: 0;
         left: 0;
         opacity: 0;
-        animation: slideAnimation 16s infinite linear;
+        animation: slideAnimation 28s infinite linear;
         }
         .banner-slide img {
         width: 100%;
@@ -148,6 +148,10 @@
         .banner-slide:nth-child(2) { animation-delay: 4s; }
         .banner-slide:nth-child(3) { animation-delay: 8s; }
         .banner-slide:nth-child(4) { animation-delay: 12s; }
+        .banner-slide:nth-child(5) { animation-delay: 16s; }
+        .banner-slide:nth-child(6) { animation-delay: 20s; }
+        .banner-slide:nth-child(7) { animation-delay: 24s; }
+        .banner-slide:nth-child(8) { animation-delay: 28s; }
 
         /* 移动端适配 */
         @media (max-width: 768px) {
@@ -180,23 +184,31 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
+        /* 产品卡片容器 */
         .product-card {
             background: var(--white);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 3px 15px rgba(0,0,0,0.05);
             transition: 0.3s;
+            display: flex;
+            flex-direction: column; /* 让卡片内容垂直排列 */
         }
         .product-card:hover {
             transform: translateY(-5px);
         }
         .product-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
+            width: 100%;          /* 宽度：100% 自适应卡片宽度 */
+            height: auto;         /* 高度：自动，随图片比例自适应 */
+            object-fit: contain;  /* 核心：图片完整显示，不变形，不裁剪 */
         }
+
+        /* 核心修改：产品信息区域用Flex布局，强制按钮到底部 */
         .product-info {
             padding: 20px;
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            flex-grow: 1; /* 让内容区域撑满卡片剩余高度 */
         }
         .product-name {
             font-size: 18px;
@@ -214,6 +226,13 @@
             font-size: 14px;
             line-height: 1.5;
             margin-bottom: 15px;
+            flex-grow: 1; /* 让描述文字自动撑开空间，把按钮挤到底部 */
+        }
+
+        /* 按钮样式（确保对齐） */
+        .product-info .btn {
+            margin-top: auto; /* 强制按钮贴底 */
+            align-self: flex-start; /* 按钮左对齐（可选：center居中） */
         }
 
         /* 公司优势区 */
@@ -374,7 +393,7 @@
     <!-- 顶部导航 -->
     <header class="header">
         <div class="container nav">
-            <a href="#" class="logo">GLOBAL TRADE</a>
+            <a href="#" class="logo">Dongguan Xiangmei Travel Products Co., Ltd.</a>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
@@ -389,44 +408,95 @@
     <section class="banner" id="home">
         <div class="banner-slider">
         <!-- 轮播图1 -->
-        <div class="banner-slide active">
-            <img src="/MyWeb/pp行李箱-合成版-1.png" alt="Banner">
+        <!-- <div class="banner-slide active">
+            <img src="/MyWeb/PP Luggage Inventory/pp行李箱-合成版-1.png" alt="Banner">
             <div class="container banner-content">
             <h1>Professional Global Trading Solutions</h1>
             <p>We supply high-quality products to worldwide customers, supporting OEM & ODM customization, fast delivery and competitive prices.</p>
             <a href="#products" class="btn">View Products</a>
             <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
             </div>
+        </div> -->
+        <div class="banner-slide active">
+            <img src="/MyWeb/Picture/banner/1.png" alt="Banner">
+            <!-- <div class="container banner-content"> -->
+                <!-- 标题：直接加行内样式 color: #000 黑色 -->
+                <!-- <h1 style="color: #000;">Professional Global Trading Solutions</h1> -->
+                <!-- 描述文字：直接加行内样式 color: #000 黑色 -->
+                <!-- <p style="color: #000;">We supply high-quality products to worldwide customers, supporting OEM & ODM customization, fast delivery and competitive prices.</p> -->
+                <!-- <a href="#products" class="btn">View Products</a>
+                <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a> -->
+            <!-- </div> -->
         </div>
         <!-- 轮播图2 -->
         <div class="banner-slide">
-            <img src="https://picsum.photos/1920/1080?random=2" alt="Banner">
-            <div class="container banner-content">
+            <img src="/MyWeb/Picture/banner/2.jpg" alt="Banner">
+            <!-- <div class="container banner-content">
             <h1>Factory Direct & Competitive Price</h1>
             <p>10+ years manufacturing experience, strict quality control, cost-effective products for global buyers.</p>
             <a href="#products" class="btn">View Products</a>
             <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
-            </div>
+            </div> -->
         </div>
         <!-- 轮播图3 -->
         <div class="banner-slide">
-            <img src="https://picsum.photos/1920/1080?random=3" alt="Banner">
-            <div class="container banner-content">
+            <img src="/MyWeb/Picture/banner/3.png" alt="Banner">
+            <!-- <div class="container banner-content">
             <h1>Global Fast Delivery</h1>
             <p>Cooperate with top logistics companies, safe and fast shipping to Europe, America, Asia and more.</p>
             <a href="#products" class="btn">View Products</a>
             <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
-            </div>
+            </div> -->
         </div>
         <!-- 轮播图4 -->
         <div class="banner-slide">
-            <img src="https://picsum.photos/1920/1080?random=4" alt="Banner">
-            <div class="container banner-content">
+            <img src="/MyWeb/Picture/banner/4.png" alt="Banner">
+            <!-- <div class="container banner-content">
             <h1>Customization Service</h1>
             <p>Support OEM & ODM, customize logo, packaging and products according to your requirements.</p>
             <a href="#products" class="btn">View Products</a>
             <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
-            </div>
+            </div> -->
+        </div>
+        <!-- 轮播图5 -->
+        <div class="banner-slide">
+            <img src="/MyWeb/Picture/banner/5.jpg" alt="Banner">
+            <!-- <div class="container banner-content">
+            <h1>Customization Service</h1>
+            <p>Support OEM & ODM, customize logo, packaging and products according to your requirements.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div> -->
+        </div>
+        <!-- 轮播图6 -->
+        <div class="banner-slide">
+            <img src="/MyWeb/Picture/banner/6.png" alt="Banner">
+            <!-- <div class="container banner-content">
+            <h1>Customization Service</h1>
+            <p>Support OEM & ODM, customize logo, packaging and products according to your requirements.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div> -->
+        </div>
+        <!-- 轮播图7 -->
+        <div class="banner-slide">
+            <img src="/MyWeb/Picture/banner/7.jpg" alt="Banner">
+            <!-- <div class="container banner-content">
+            <h1>Customization Service</h1>
+            <p>Support OEM & ODM, customize logo, packaging and products according to your requirements.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div> -->
+        </div>
+        <!-- 轮播图8 -->
+        <div class="banner-slide">
+            <img src="/MyWeb/Picture/banner/8.png" alt="Banner">
+            <!-- <div class="container banner-content">
+            <h1>Customization Service</h1>
+            <p>Support OEM & ODM, customize logo, packaging and products according to your requirements.</p>
+            <a href="#products" class="btn">View Products</a>
+            <a href="#contact" class="btn btn-accent" style="margin-left: 15px;">Contact Us</a>
+            </div> -->
         </div>
         </div>
     </section>
@@ -441,42 +511,231 @@
             <div class="product-grid">
                 <!-- 产品1 -->
                 <div class="product-card">
-                    <img src="https://picsum.photos/600/400?random=10" class="product-img" alt="Product">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/PC/0.png" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/PC/1.jpg",
+                            "/MyWeb/Picture/PC/2.jpg",
+                            "/MyWeb/Picture/PC/3.png",
+                            "/MyWeb/Picture/PC/4.jpg",
+                            "/MyWeb/Picture/PC/5.jpg",
+                            "/MyWeb/Picture/PC/6.png",
+                            "/MyWeb/Picture/PC/7.jpg",
+                            "/MyWeb/Picture/PC/8.jpg",
+                            "/MyWeb/Picture/PC/9.png",
+                            "/MyWeb/Picture/PC/10.png",
+                            "/MyWeb/Picture/PC/11.jpg",
+                            "/MyWeb/Picture/PC/12.jpg"
+                        ]'
+                        alt="Product"
+                    >
                     <div class="product-info">
-                        <h3 class="product-name">Electronic Product</h3>
-                        <div class="product-price">$29.99</div>
-                        <p class="product-desc">High quality, durable, suitable for global market</p>
-                        <a href="#" class="btn">Inquiry</a>
+                        <h3 class="product-name">PC Luggage Inventory</h3>
+                        <!-- <div class="product-price">$29.99</div> -->
+                        <p class="product-desc">Premium Luggage: The hardest, most impact-resistant, and stylish</p>
+                        <a href="#contact" class="btn">Inquiry</a>
                     </div>
                 </div>
                 <!-- 产品2 -->
                 <div class="product-card">
-                    <img src="https://picsum.photos/600/400?random=11" class="product-img" alt="Product">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/PS&ABS/4.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/PS&ABS/5.jpg",
+                            "/MyWeb/Picture/PS&ABS/6.jpg",
+                            "/MyWeb/Picture/PS&ABS/7.jpg",
+                            "/MyWeb/Picture/PS&ABS/8.jpg",
+                            "/MyWeb/Picture/PS&ABS/9.jpg",
+                            "/MyWeb/Picture/PS&ABS/10.jpg",
+                            "/MyWeb/Picture/PS&ABS/11.jpg",
+                            "/MyWeb/Picture/PS&ABS/12.jpg",
+                            "/MyWeb/Picture/PS&ABS/13.jpg",
+                            "/MyWeb/Picture/PS&ABS/14.jpg",
+                            "/MyWeb/Picture/PS&ABS/15.jpg"
+                        ]'
+                        alt="Product"
+                    >
                     <div class="product-info">
-                        <h3 class="product-name">Home Appliance</h3>
-                        <div class="product-price">$45.99</div>
-                        <p class="product-desc">CE certified, export to Europe and America</p>
-                        <a href="#" class="btn">Inquiry</a>
+                        <h3 class="product-name">PC/ ABS luggage Inventory</h3>
+                        <!-- <div class="product-price">$45.99</div> -->
+                        <p class="product-desc">Balancing hardness and toughness, it is now the most mainstream</p>
+                        <a href="#contact" class="btn">Inquiry</a>
                     </div>
                 </div>
                 <!-- 产品3 -->
                 <div class="product-card">
-                    <img src="https://picsum.photos/600/400?random=12" class="product-img" alt="Product">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/PP/0.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/PP/7.jpg",
+                            "/MyWeb/Picture/PP/1.jpg",
+                            "/MyWeb/Picture/PP/2.jpg",
+                            "/MyWeb/Picture/PP/3.jpg",
+                            "/MyWeb/Picture/PP/4.jpg",
+                            "/MyWeb/Picture/PP/5.jpg",
+                            "/MyWeb/Picture/PP/6.jpg",
+                            "/MyWeb/Picture/PP/8.jpg"
+                        ]'
+                        alt="Product"
+                    >
                     <div class="product-info">
-                        <h3 class="product-name">Hardware Tool</h3>
-                        <div class="product-price">$15.99</div>
-                        <p class="product-desc">Factory direct supply, competitive price</p>
-                        <a href="#" class="btn">Inquiry</a>
+                        <h3 class="product-name">PP luggage Inventory</h3>
+                        <!-- <div class="product-price">$15.99</div> -->
+                        <p class="product-desc">Lightweight, shock-resistant, affordable, and durable</p>
+                        <a href="#contact" class="btn">Inquiry</a>
                     </div>
                 </div>
                 <!-- 产品4 -->
                 <div class="product-card">
-                    <img src="https://picsum.photos/600/400?random=13" class="product-img" alt="Product">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/ABS/0.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/ABS/1.jpg",
+                            "/MyWeb/Picture/ABS/2.jpg",
+                            "/MyWeb/Picture/ABS/3.jpg"
+                        ]'
+                        alt="Product"
+                    >
                     <div class="product-info">
-                        <h3 class="product-name">Fashion Accessory</h3>
-                        <div class="product-price">$9.99</div>
-                        <p class="product-desc">Trendy design, popular in Southeast Asia</p>
-                        <a href="#" class="btn">Inquiry</a>
+                        <h3 class="product-name">ABS Luggage Inventory</h3>
+                        <p class="product-desc">cost-effective Luggage: Stiff, good-looking, and cheap</p>
+                        <a href="#contact" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <!-- 产品9 -->
+                <div class="product-card">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/metal/0.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/metal/1.jpg",
+                            "/MyWeb/Picture/metal/2.jpg",
+                            "/MyWeb/Picture/metal/3.jpg",
+                            "/MyWeb/Picture/metal/4.jpg",
+                            "/MyWeb/Picture/metal/5.jpg",
+                            "/MyWeb/Picture/metal/6.jpg",
+                            "/MyWeb/Picture/metal/7.jpg",
+                            "/MyWeb/Picture/metal/8.jpg"
+                        ]'
+                        alt="Product"
+                    >
+                    <div class="product-info">
+                        <h3 class="product-name">metal luggage</h3>
+                        <!-- <div class="product-price">$9.99</div> -->
+                        <p class="product-desc">Durable, pressure-resistant, and high-quality feel</p>
+                        <a href="#contact" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <!-- 产品5 -->
+                <div class="product-card">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/backpack/0.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/backpack/1.jpg",
+                            "/MyWeb/Picture/backpack/2.jpg",
+                            "/MyWeb/Picture/backpack/3.jpg",
+                            "/MyWeb/Picture/backpack/4.jpg",
+                            "/MyWeb/Picture/backpack/5.jpg",
+                            "/MyWeb/Picture/backpack/6.jpg",
+                            "/MyWeb/Picture/backpack/7.jpg",
+                            "/MyWeb/Picture/backpack/8.jpg",
+                            "/MyWeb/Picture/backpack/9.jpg",
+                            "/MyWeb/Picture/backpack/10.jpg",
+                            "/MyWeb/Picture/backpack/11.jpg",
+                            "/MyWeb/Picture/backpack/12.jpg",
+                            "/MyWeb/Picture/backpack/13.jpg",
+                            "/MyWeb/Picture/backpack/14.jpg",
+                            "/MyWeb/Picture/backpack/15.jpg"
+                        ]'
+                        alt="Product"
+                    >
+                    <div class="product-info">
+                        <h3 class="product-name">backpack</h3>
+                        <!-- <div class="product-price">$9.99</div> -->
+                        <p class="product-desc">Comfortable, spacious, and hassle-free</p>
+                        <a href="#contact" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <!-- 产品6 -->
+                <div class="product-card">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/duffel bag/0.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/duffel bag/1.jpg",
+                            "/MyWeb/Picture/duffel bag/2.jpg",
+                            "/MyWeb/Picture/duffel bag/3.jpg",
+                            "/MyWeb/Picture/duffel bag/4.jpg",
+                            "/MyWeb/Picture/duffel bag/5.jpg",
+                            "/MyWeb/Picture/duffel bag/6.jpg",
+                            "/MyWeb/Picture/duffel bag/7.jpg",
+                            "/MyWeb/Picture/duffel bag/8.jpg",
+                            "/MyWeb/Picture/duffel bag/9.jpg"
+                        ]'
+                        alt="Product"
+                    >
+                    <div class="product-info">
+                        <h3 class="product-name">duffel bag</h3>
+                        <!-- <div class="product-price">$9.99</div> -->
+                        <p class="product-desc">Compact, lightweight, and affordable, it is suitable for moving, packing quilts, and short-distance temporary transportation</p>
+                        <a href="#contact" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <!-- 加 class 和 data-images（配件专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/luggage parts/0.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/luggage parts/1.jpg",
+                            "/MyWeb/Picture/luggage parts/2.jpg",
+                            "/MyWeb/Picture/luggage parts/3.jpg",
+                            "/MyWeb/Picture/luggage parts/4.jpg",
+                            "/MyWeb/Picture/luggage parts/5.jpg",
+                            "/MyWeb/Picture/luggage parts/6.jpg",
+                            "/MyWeb/Picture/luggage parts/7.jpg",
+                            "/MyWeb/Picture/luggage parts/8.jpg",
+                            "/MyWeb/Picture/luggage parts/9.jpg",
+                            "/MyWeb/Picture/luggage parts/10.jpg",
+                            "/MyWeb/Picture/luggage parts/11.jpg"
+                        ]'
+                        alt="Product"
+                    >
+                    <div class="product-info">
+                        <h3 class="product-name">luggage parts</h3>
+                        <p class="product-desc">Includes core accessories such as wheels and pull rods</p>
+                        <a href="#contact" class="btn">Inquiry</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <!-- 加 class 和 data-images（冰包专用图） -->
+                    <img 
+                        src="/MyWeb/Picture/ice bag/0.jpg" 
+                        class="product-img clickable-product-img" 
+                        data-images='[
+                            "/MyWeb/Picture/ice bag/1.jpg",
+                            "/MyWeb/Picture/ice bag/2.jpg",
+                            "/MyWeb/Picture/ice bag/3.jpg",
+                            "/MyWeb/Picture/ice bag/4.jpg"
+                        ]'
+                        alt="Product"
+                    >
+                    <div class="product-info">
+                        <h3 class="product-name">ice bag</h3>
+                        <p class="product-desc">Portable, heat and cold retention, waterproof and leak-proof, foldable, freshness preservation</p>
+                        <a href="#contact" class="btn">Inquiry</a>
                     </div>
                 </div>
             </div>
@@ -520,13 +779,13 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-img">
-                    <img src="https://picsum.photos/800/500?random=20" alt="About Us">
+                    <img src="/MyWeb/Picture/company/1.png" alt="About Us">
                 </div>
                 <div class="about-text">
                     <h2>About Our Company</h2>
-                    <p>Founded in 2010, we are a professional international trade company integrating industry and trade. Our products are exported to more than 80 countries and regions around the world.</p>
-                    <p>We have a professional design team, production team and foreign trade service team, committed to providing customers with high-quality products and one-stop purchasing solutions.</p>
-                    <p>Adhering to the principle of "integrity first, quality foremost", we have established long-term stable cooperative relations with global customers.</p>
+                    <p>Since 2000, our company has been dedicated to the design, production, and sales of luggage and various bags. We boast a modern production base spanning 36,600 square meters, over 200 experienced employees, and 8 standardized production lines, achieving a monthly production capacity of 100,000 finished bags. Our core craftsmanship team possesses over 10 years of industry experience and has long collaborated with premium suppliers such as HINOMOTO, YKK, and YIF.</p>
+                    <p>We have 5 injection molding machines, 12 thermoforming machines, 2 plate machines, 60 sewing machines, and 8 assembly lines, capable of independently producing ABS/PC plates and various types of cases. We specialize in undertaking ODM/OEM custom development and also provide spot stock wholesale services.</p>
+                    <p>Welcome to conduct offline factory audits and interviews.</p>
                     <a href="#contact" class="btn">Learn More</a>
                 </div>
             </div>
@@ -540,7 +799,7 @@
                 <h2>Contact Us Now</h2>
                 <p>Send us your inquiry, we will reply within 24 hours</p>
             </div>
-            <form class="contact-form">
+            <!-- <form class="contact-form">
                 <div class="form-group">
                     <input type="text" placeholder="Your Name" required>
                 </div>
@@ -554,11 +813,11 @@
                     <textarea placeholder="Your Message / Inquiry" required></textarea>
                 </div>
                 <button type="submit" class="btn" style="width: 100%;">Send Inquiry</button>
-            </form>
+            </form> -->
             <div class="contact-info">
-                <p>📧 Email: info@globaltrade.com</p>
-                <p>📞 Phone: +86 138 XXXX XXXX</p>
-                <p>📍 Address: XXXX Industrial Zone, XXXX City, China</p>
+                <p>📧 Email: linjianqiu01@qq.com</p>
+                <p>📞 Phone: +86 132 1530 6783</p>
+                <p>📍 Address: No.102 Jinsha road, Shayao village, Shijie town, Dongguan city, Guangdong province, China.</p>
             </div>
         </div>
     </section>
@@ -590,5 +849,27 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // 1. 获取所有带 clickable-product-img 类的图片
+        const allClickableImgs = document.querySelectorAll(".clickable-product-img");
+    
+        // 2. 遍历每一张图片，分别绑定点击事件
+        allClickableImgs.forEach(function(img) {
+            // 读取这个产品自己的图片列表（从 data-images 里拿）
+            const imageList = JSON.parse(img.getAttribute("data-images"));
+            // 给这个图片单独存一个「当前索引」（互不干扰）
+            img.currentIndex = 0;
+    
+            // 3. 监听点击事件
+            img.addEventListener("click", function() {
+                // 索引 +1，循环播放
+                img.currentIndex = (img.currentIndex + 1) % imageList.length;
+                // 只换这一张图的 src
+                img.src = imageList[img.currentIndex];
+            });
+        });
+    </script>
+
 </body>
 </html>
